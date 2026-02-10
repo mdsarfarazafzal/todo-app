@@ -1,4 +1,9 @@
 # Todo App
+
+A Todo application built using JavaScript concepts.<br/>
 [Live](https://mdsarfarazafzal.github.io/todo-app/)
---
-Todo app implementing add, update and delete functionality using JavaScript concepts.
+## Features
+- Add, update, delete todos
+- Mark todos as complete/incomplete
+- Persistent state using localStorage
+- Responsive UI
