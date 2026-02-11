@@ -153,7 +153,8 @@ footer {
   font-weight: 500;
 }
 
-.clear-btn {
+.clear-btn,
+.logout-btn {
   background: none;
   border: none;
   color: #ef4444;
@@ -162,7 +163,8 @@ footer {
   cursor: pointer;
 }
 
-.clear-btn:hover {
+.clear-btn:hover,
+.logout-btn:hover {
   text-decoration: underline;
 }
 
@@ -260,6 +262,10 @@ footer {
 }
 .delete-btn:hover {
   color: #ef4444;
+}
+
+.cancel-btn:hover {
+  color: var(--text-main);
 }
 
 .edit-input {
