@@ -14,7 +14,7 @@ const logout = document.querySelector(".logout-btn");
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value.trim();
   if (email === "todo@cbnits.com" && password === "todo123") {
     isLoggedIn = true;
@@ -147,3 +147,4 @@ logout.addEventListener("click", () => {
 });
 clearBtn.addEventListener("click", clearCompleted);
 window.addEventListener("load", auth);
+
