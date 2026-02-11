@@ -17,6 +17,7 @@ form.addEventListener("submit", (e) => {
     text: text,
     completed: false,
     isEditing: false,
+    createdAt: new Date().toLocaleString(),
   };
 
   todos.unshift(newTodo);
@@ -39,6 +40,7 @@ function loadTodos() {
 
     if (todo.isEditing) {
       li.innerHTML = `
+                        <div class="todo-wrapper">
                         <div class="todo-content">
                             <input type="text" class="edit-input" value="${todo.text}">
                         </div>
@@ -46,9 +48,11 @@ function loadTodos() {
                             <button onclick="saveEdit(${todo.id})" class="action-btn" style="color: #1d4ed8">Save</button>
                             <button onclick="toggleEdit(${todo.id})" class="action-btn">Cancel</button>
                         </div>
+                        </div>
                     `;
     } else {
       li.innerHTML = `
+                        <div class="todo-wrapper">
                         <div class="todo-content">
                             <div onclick="toggleComplete(${todo.id})" class="checkbox ${todo.completed ? "checked" : ""}">
                                 ${todo.completed ? "✔" : ""}
@@ -59,6 +63,8 @@ function loadTodos() {
                             <button onclick="toggleEdit(${todo.id})" class="action-btn edit-btn">Edit</button>
                             <button onclick="deleteTodo(${todo.id})" class="action-btn delete-btn">Delete</button>
                         </div>
+                        </div>
+                        <div class="todo-date">Added on: ${todo.createdAt}</div>
                     `;
     }
     list.appendChild(li);
