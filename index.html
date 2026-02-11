@@ -7,7 +7,36 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="app-container">
+    <div class="container">
+      <header>
+        <h1>Welcome Back</h1>
+      </header>
+      <form class="login-form">
+        <div class="input-group">
+          <label>Email</label>
+          <input
+            type="text"
+            id="email"
+            class="input-field"
+            placeholder="todo@cbnits.com"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="todo123"
+            required
+          />
+        </div>
+        <p class="error-msg"></p>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+    <div class="container hidden">
       <header>
         <h1>My Tasks</h1>
       </header>
