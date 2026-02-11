@@ -10,6 +10,7 @@ const clearBtn = document.querySelector(".clear-btn");
 const login = document.querySelectorAll(".container")[0];
 const app = document.querySelectorAll(".container")[1];
 const loginForm = document.querySelector(".login-form");
+const logout = document.querySelector(".logout-btn");
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -75,7 +76,7 @@ function loadTodos() {
                         </div>
                         <div class="actions">
                             <button onclick="saveEdit(${todo.id})" class="action-btn" style="color: #1d4ed8">Save</button>
-                            <button onclick="toggleEdit(${todo.id})" class="action-btn">Cancel</button>
+                            <button onclick="toggleEdit(${todo.id})" class="action-btn cancel-btn">Cancel</button>
                         </div>
                         </div>
                         <div class="todo-date">Added on: ${todo.createdAt}</div>
@@ -139,5 +140,10 @@ function clearCompleted() {
   saveAndLoad();
 }
 
+logout.addEventListener("click", () => {
+  isLoggedIn = false;
+  localStorage.setItem("isLoggedIn", "false");
+  auth();
+});
 clearBtn.addEventListener("click", clearCompleted);
 window.addEventListener("load", auth);
