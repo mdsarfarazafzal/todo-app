@@ -1,4 +1,5 @@
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
+let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
 const form = document.querySelector(".todo-form");
 const input = document.querySelector(".todo-input");
@@ -6,6 +7,23 @@ const list = document.querySelector(".todo-list");
 const emptyState = document.querySelector(".empty-state");
 const itemsLeft = document.querySelector(".items-count");
 const clearBtn = document.querySelector(".clear-btn");
+const login = document.querySelectorAll(".container")[0];
+const app = document.querySelectorAll(".container")[1];
+const loginForm = document.querySelector(".login-form");
+
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  if (email === "todo@cbnits.com" && password === "todo123") {
+    isLoggedIn = true;
+    localStorage.setItem("isLoggedIn", "true");
+    auth();
+  } else {
+    document.querySelector(".error-msg").innerText =
+      "Invalid credentials. Try todo@cbnits.com / todo123";
+  }
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -24,6 +42,17 @@ form.addEventListener("submit", (e) => {
   input.value = "";
   saveAndLoad();
 });
+
+function auth() {
+  if (isLoggedIn) {
+    login.classList.add("hidden");
+    app.classList.remove("hidden");
+    loadTodos();
+  } else {
+    login.classList.remove("hidden");
+    app.classList.add("hidden");
+  }
+}
 
 function saveAndLoad() {
   localStorage.setItem("todos", JSON.stringify(todos));
@@ -49,6 +78,7 @@ function loadTodos() {
                             <button onclick="toggleEdit(${todo.id})" class="action-btn">Cancel</button>
                         </div>
                         </div>
+                        <div class="todo-date">Added on: ${todo.createdAt}</div>
                     `;
     } else {
       li.innerHTML = `
@@ -110,4 +140,4 @@ function clearCompleted() {
 }
 
 clearBtn.addEventListener("click", clearCompleted);
-window.addEventListener("load", loadTodos);
+window.addEventListener("load", auth);
