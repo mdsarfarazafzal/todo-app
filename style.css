@@ -133,9 +133,7 @@ footer {
 
 .todo-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
+  flex-direction: column;
   background-color: #fff;
   border-radius: 0.75rem;
   border: 1px solid var(--border-color);
@@ -150,6 +148,13 @@ footer {
 
 .todo-item.completed-item {
   background-color: #f8fafc;
+}
+
+.todo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
 .todo-content {
@@ -224,6 +229,13 @@ footer {
   outline: none;
 }
 
+.todo-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: right;
+  padding: 1rem;
+}
+
 .todo-list::-webkit-scrollbar {
   width: 4px;
 }
@@ -249,4 +261,3 @@ footer {
     max-height: 550px;
   }
 }
-
