@@ -1,5 +1,23 @@
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+let todos = currentUser ? currentUser.todos : [];
 let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+let server = JSON.parse(localStorage.getItem("server")) || [
+  {
+    email: encrypt("alex@user.com"),
+    password: encrypt("alex"),
+    todos: [],
+  },
+  {
+    email: encrypt("sam@user.com"),
+    password: encrypt("sam"),
+    todos: [],
+  },
+  {
+    email: encrypt("max@user.com"),
+    password: encrypt("max"),
+    todos: [],
+  },
+];
 
 const form = document.querySelector(".todo-form");
 const input = document.querySelector(".todo-input");
@@ -16,13 +34,26 @@ loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value.trim();
-  if (email === "todo@cbnits.com" && password === "todo123") {
+  // if (email === "todo@cbnits.com" && password === "todo123") {
+  //   isLoggedIn = true;
+  //   localStorage.setItem("isLoggedIn", "true");
+  //   auth();
+  // } else {
+  //   document.querySelector(".error-msg").innerText =
+  //     "Invalid credentials. Try todo@cbnits.com / todo123";
+  // }
+  const user = server.find(
+    (u) => decrypt(u.email) === email && decrypt(u.password) === password,
+  );
+  if (user) {
     isLoggedIn = true;
     localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    todos = user.todos;
+    currentUser = user;
     auth();
   } else {
-    document.querySelector(".error-msg").innerText =
-      "Invalid credentials. Try todo@cbnits.com / todo123";
+    document.querySelector(".error-msg").innerText = "Invalid credentials.";
   }
 });
 
@@ -44,6 +75,13 @@ form.addEventListener("submit", (e) => {
   saveAndLoad();
 });
 
+function encrypt(str) {
+  return `a#t${btoa(str)}s*o`;
+}
+function decrypt(str) {
+  return atob(str.slice(3, -3));
+}
+
 function auth() {
   if (isLoggedIn) {
     login.classList.add("hidden");
@@ -56,7 +94,17 @@ function auth() {
 }
 
 function saveAndLoad() {
-  localStorage.setItem("todos", JSON.stringify(todos));
+  // localStorage.setItem("todos", JSON.stringify(todos));
+  if (currentUser) {
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({ ...currentUser, todos }),
+    );
+    server = server.map((u) =>
+      u.email === currentUser.email ? { ...currentUser, todos } : u,
+    );
+    localStorage.setItem("server", JSON.stringify(server));
+  }
   loadTodos();
 }
 
@@ -143,8 +191,8 @@ function clearCompleted() {
 logout.addEventListener("click", () => {
   isLoggedIn = false;
   localStorage.setItem("isLoggedIn", "false");
+  localStorage.removeItem("currentUser");
   auth();
 });
 clearBtn.addEventListener("click", clearCompleted);
 window.addEventListener("load", auth);
-
