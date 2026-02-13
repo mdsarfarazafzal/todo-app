@@ -1,3 +1,5 @@
+const key =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImNibml0cyIsImFkbWluIjp0cnVlLCJpYXQiOjE3NzA5NDY5MzEsImV4cCI6MTc3MDk1MDUzMX0.fS-7S2NrKv6zlbeJGZZz1ihrHS6XDg1U5ZijRDREUpc";
 let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 let todos = currentUser ? currentUser.todos : [];
 let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -76,10 +78,10 @@ form.addEventListener("submit", (e) => {
 });
 
 function encrypt(str) {
-  return `a#t${btoa(str)}s*o`;
+  return CryptoJS.AES.encrypt(str, key).toString();
 }
 function decrypt(str) {
-  return atob(str.slice(3, -3));
+  return CryptoJS.AES.decrypt(str, key).toString(CryptoJS.enc.Utf8);
 }
 
 function auth() {
